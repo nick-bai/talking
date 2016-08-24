@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+<head>
+    <meta charset="utf-8">
+    <title>聊天标题</title>
+    <link rel="stylesheet" type="text/css" href="/static/resource/widget/css/RongIMWidget.min.css"/>
+    <script src="/static/resource/widget/jquery-1.11.1.min.js"></script>
+</head>
+<body ng-controller="main">
+<button ng-click="show()">show</button>
+<button ng-click="hidden()">hidden</button>
+<button ng-click="setconversation()">设置会话</button>
+<label>会话类型</label><input ng-model="targetType">
+<label>会话Id</label><input ng-model="targetId">
+<div>
+    <rong-widget></rong-widget>
+</div>
+<!--客服列表框-->
+</body>
+<script src="/static/resource/widget/angular.js"></script>
+<script src="/static/resource/widget/RongIMWidget.js"></script>
+<script type="text/javascript">
+
+    var demo = angular.module("demo", ["RongWebIMWidget"]);
+
+    demo.config(function($logProvider){
+        //$logProvider.debugEnabled(false);
+    })
+
+    demo.controller("main", ["$scope","WebIMWidget", "$http", function($scope,WebIMWidget,
+                                                                       $http) {
+        $scope.show = function() {
+            WebIMWidget.show();
+        }
+
+        $scope.hidden = function() {
+            WebIMWidget.hidden();
+        }
+
+        $scope.server = WebIMWidget;
+        $scope.targetType=1;
+
+        $scope.setconversation=function(){
+            WebIMWidget.setConversation(Number($scope.targetType), $scope.targetId, "自定义:"+$scope.targetId);
+        }
+
+        WebIMWidget.init({
+            appkey: "e0x9wycfxxx5q",
+            token: "{$token}",
+            style:{
+                width:600,
+                positionFixed:true,
+                bottom:20,
+            },
+            displayConversationList:true,
+            conversationListPosition:WebIMWidget.EnumConversationListPosition.right,
+            hiddenConversations:[{type:WebIMWidget.EnumConversationType.PRIVATE,id:'bb'}],
+            onSuccess:function(id){
+                console.log(id);
+            },
+            onError:function(error){
+                console.log("error:"+error);
+            }
+        });
+
+        WebIMWidget.show();
+
+        WebIMWidget.setUserInfoProvider(function(targetId,obj){
+            $http({
+                url:"{:url('index/userinfo')}"
+            }).success(function(rep){
+                var user;
+                rep.userlist.forEach(function(item){
+                    if(item.id==targetId){
+                        user=item;
+                    }
+                })
+
+                if(user){
+                    obj.onSuccess({id:user.id,name:user.name,portraitUri:user.portraitUri});
+                }else{
+                    obj.onSuccess({id:targetId,name:"陌："+targetId});
+                }
+            })
+        });
+
+        WebIMWidget.setOnlineStatusProvider(function(arr,obj){
+            $http({
+                url:"{:url('index/online')}"
+            }).success(function(rep){
+                obj.onSuccess(rep.data);
+            })
+        })
+
+
+        WebIMWidget.onClose=function(){
+            console.log("已关闭");
+        }
+
+        WebIMWidget.show();
+    }]);
+
+</script>
+
+</html>

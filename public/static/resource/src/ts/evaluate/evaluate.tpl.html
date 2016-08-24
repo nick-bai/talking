@@ -1,0 +1,55 @@
+<div class="rongcloud-layermbox" ng-show="display">
+        <div class="rongcloud-laymshade"></div>
+        <div class="rongcloud-layermmain">
+            <div class="rongcloud-section">
+                <div class="rongcloud-layermchild" ng-show="!end">
+                    <div class="rongcloud-layermcont">
+                        <!--评价人工-->
+                        <div class="rongcloud-type1" ng-show="type==1">
+                            <h4>&nbsp;评价客服</h4>
+                            <div class="rongcloud-layerPanel1">
+                                <div class="rongcloud-star">
+                                  <span ng-repeat="item in stars track by $index" >
+                                    <span ng-class="{'rongcloud-star-on':$index<data.stars,'rongcloud-star-off':$index>=data.stars}" ng-click="confirm($index+1)" ng-mouseenter="mousehover($index+1)" ng-mouseleave="mousehover(0)"></span>
+                                  </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--评价机器人-->
+                        <div class="rongcloud-type2" ng-show="type==2">
+                            <h4>&nbsp;&nbsp;机器人是否解决了您的问题 ？</h4>
+                            <div class="rongcloud-layerPanel1">
+                                <a class="rongcloud-rong-btn rongcloud-btnY" ng-class="{'rongcloud-cur':data.value===true}" href="javascript:void(0);" ng-click="confirm(true)">是</a>
+                                <a class="rongcloud-rong-btn rongcloud-btnN" ng-class="{'rongcloud-cur':data.value===false}" href="javascript:void(0);" ng-click="confirm(false)">否</a>
+                            </div>
+                        </div>
+
+                        <!--评价内容-->
+                        <div class="rongcloud-layerPanel2" ng-show="displayDescribe">
+                            <p>是否有以下情况 ？</p>
+                            <div class="rongcloud-labels">
+                                <span ng-repeat="item in labels"><a class="rongcloud-rong-btn" ng-class="{'rongcloud-cur':item.selected}" ng-click="item.selected=!item.selected" href="">{{item.display}}</a></span>
+                                <!-- <a class="rongcloud-btn" ng-click="" href="">答非所问</a>
+                                <a class="rongcloud-btn" ng-click="" href="">理解能力差</a>
+                                <a class="rongcloud-btn" ng-click="" href="">一问三不知</a>
+                                <a class="rongcloud-btn" ng-click="" href="">不礼貌</a> -->
+                            </div>
+                            <div class="rongcloud-suggestBox">
+                                <textarea name="" placeholder="欢迎给我们的服务提建议~" ng-model="data.describe"></textarea>
+                            </div>
+                            <div class="rongcloud-subBox">
+                                <a class="rongcloud-rong-btn" href="" ng-click="commit()">提交评价</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rongcloud-layermbtn"><span ng-click="confirm()">跳过</span><span ng-click="cancle()">取消</span></div>
+                </div>
+                <!--反馈提示-->
+                <div class="rongcloud-layermchild rongcloud-feedback" ng-show="end">
+                    <div class="rongcloud-layermcont">
+                        感谢您的反馈 ^ - ^ ！
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

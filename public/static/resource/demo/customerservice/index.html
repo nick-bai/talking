@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../widget/css/RongIMWidget.css"/>
+
+    <script>
+    if(navigator.userAgent.indexOf("MSIE 9")!=-1){
+      window.WEB_XHR_POLLING = true;
+    }
+    </script>
+
+  </head>
+  <body>
+    <!-- <h1>{{title}}</h1>
+    <button ng-click="show()">show</button>
+    <button ng-click="hidden()">hidden</button> -->
+<div ng-app="demo">
+
+      <div  ng-controller="main">
+              <button ng-click="show()">显示</button>
+              <rong-widget></rong-widget>
+      </div>
+</div>
+
+      <script src="../lib/jquery-1.11.1.min.js"></script>
+      <script src="../lib/angular.js"></script>
+      <script src="../widget/RongIMWidget.js"></script>
+      <script src="../lib/cookie.js"></script>
+      <script src="./index.js"></script>
+      <!-- <script src="./kefu.js"></script> -->
+
+  </body>
+
+
+</html>

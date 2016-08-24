@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../widget/css/RongIMWidget.css"/>
+
+    <script>
+    if(navigator.userAgent.indexOf("MSIE 9")!=-1){
+      window.WEB_XHR_POLLING = true;
+    }
+    </script>
+
+          <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div ng-app="demo">
+      <div  ng-controller="main">
+        <h1>{{title}}</h1>
+        <button ng-click="show()">show</button>
+        <button ng-click="hidden()">hidden</button>
+        <button ng-click="setconversation()">设置会话</button>
+        <label>会话类型</label><input ng-model="targetType">
+        <label>会话Id</label><input ng-model="targetId">
+        <!-- <div style="position:fixed;left:0px;width:500px;height:500px;"> -->
+          <!-- <rong-conversation style=""></rong-conversation> -->
+          <rong-widget></rong-widget>
+        <!-- </div> -->
+        <!--客服列表框-->
+
+      </div>
+    </div>
+
+
+  </body>
+
+  <!-- <script src="./RongIMLib.js"></script> -->
+  <!-- <script src="http://cdn.ronghub.com/RongIMLib-2.0.2.beta.min.js"></script> -->
+  <script src="../lib/angular.js"></script>
+  <!-- <script src="./src/angular-animate.min.js"></script> -->
+  <!-- <script src="./emoji-0.9.2.js"></script> -->
+  <script src="../widget/RongIMWidget.js"></script>
+
+  <script src="./index.js"></script>
+
+</html>

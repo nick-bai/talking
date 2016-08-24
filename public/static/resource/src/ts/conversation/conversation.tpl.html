@@ -1,0 +1,89 @@
+
+    <div id="rong-conversation" class="rongcloud-kefuChatBox rongcloud-both rongcloud-am-fade-and-slide-top" ng-show="showSelf" ng-class="{'rongcloud-fullScreen':resoures.fullScreen}" ><!-- fullScreen 全屏class -->
+        <evaluatedir type="evaluate.type" display="evaluate.showSelf" confirm="evaluate.onConfirm(data)" cancle="evaluate.onCancle()"></evaluatedir>
+        <div class="rongcloud-kefuChat">
+            <div id="header" class="rongcloud-rong-header rongcloud-blueBg rongcloud-online">
+                <div class="rongcloud-infoBar rongcloud-pull-left">
+                    <div class="rongcloud-infoBarTit">
+                        <!-- <span class="rongcloud-Presence rongcloud-Presence--stacked"></span> -->
+                        <span class="rongcloud-kefuName" ng-bind="conversation.title"></span>
+                    </div>
+                </div>
+
+                <div class="rongcloud-toolBar rongcloud-headBtn rongcloud-pull-right">
+                    <div ng-show="!config.displayConversationList&&config.voiceNotification" class="rongcloud-voice" ng-class="{'rongcloud-voice-mute':!data.voiceSound,'rongcloud-voice-sound':data.voiceSound}" ng-click="data.voiceSound=!data.voiceSound"></div>
+                    <a href="javascript:;" class="rongcloud-kefuChatBoxHide rongcloud-sprite" style="margin-right:6px;" ng-show="!config.displayConversationList" ng-click="minimize()"  title="隐藏"></a>
+                    <!-- <a href="javascript:;" class="rongcloud-kefuChatBoxMin rongcloud-sprite" ng-show="resoures.fullScreen&&!widgetConfig.displayConversationList" ng-click="resoures.fullScreen=false;" title="还原"></a>
+                    <a href="javascript:;" class="rongcloud-kefuChatBoxMax rongcloud-sprite" ng-show="!resoures.fullScreen&&!widgetConfig.displayConversationList" ng-click="resoures.fullScreen=true;" title="最大化"></a> -->
+                    <a href="javascript:;" class="rongcloud-kefuChatBoxClose rongcloud-sprite" ng-click="close()" title="结束对话"></a>
+                </div>
+            </div>
+                <!-- outline -->
+                <div class="rongcloud-outlineBox" ng-hide="data.connectionState">
+                    <div class="rongcloud-sprite"></div>
+                    <span>连接断开,请刷新重连</span>
+                </div>
+                <div id="Messages" class="" >
+                    <!-- empty -->
+                    <div class="rongcloud-emptyBox">暂时没有新消息</div>
+
+
+                    <div class="rongcloud-MessagesInner">
+
+                        <div ng-repeat="item in messageList" ng-switch="item.panelType">
+                            <div class="rongcloud-Messages-date" ng-switch-when="104"><b class="">{{item.sentTime|historyTime}}</b></div>
+                            <div class="rongcloud-Messages-history" ng-switch-when="105"><b class="" ng-click="getHistory()">查看历史消息</b></b></div>
+                            <div class="rongcloud-Messages-history" ng-switch-when="106"><b class="" ng-click="getMoreMessage()">获取更多消息</b></div>
+                            <div class="rongcloud-sys-tips" ng-switch-when="2"><span ng-bind-html="item.content.content|trustHtml"></span></div>
+                            <div class="rongcloud-Message" ng-switch-when="1">
+                                <div class="rongcloud-Messages-unreadLine"></div>
+                                <div>
+                                    <div class="rongcloud-Message-header"><img class="rongcloud-img rongcloud-u-isActionable rongcloud-Message-avatar rongcloud-avatar" ng-src="{{item.content.userInfo.portraitUri||item.content.userInfo.icon}}" err-src="http://7xo1cb.com1.z0.glb.clouddn.com/rongcloudkefu2.png" errSrcserasdfasdfasdfa alt="">
+                                        <div class="rongcloud-Message-author rongcloud-clearfix">
+                                          <a class="rongcloud-author rongcloud-u-isActionable">{{item.content.userInfo.name}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rongcloud-Message-body" ng-switch="item.messageType">
+                                    <textmessage ng-switch-when="TextMessage" msg="item.content"></textmessage>
+                                    <imagemessage ng-switch-when="ImageMessage" msg="item.content"></imagemessage>
+                                    <voicemessage ng-switch-when="VoiceMessage" msg="item.content"></voicemessage>
+                                    <locationmessage ng-switch-when="LocationMessage" msg="item.content"></locationmessage>
+                                    <richcontentmessage ng-switch-when="RichContentMessage" msg="item.content"></richcontentmessage>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div id="footer" class="rongcloud-rong-footer" style="display: block;">
+                <div class="rongcloud-footer-con">
+                    <div class="rongcloud-text-layout">
+                        <div id="funcPanel" class="rongcloud-funcPanel rongcloud-robotMode">
+                            <div class="rongcloud-mode1" ng-show="_inputPanelState==0">
+                                <div class="rongcloud-MessageForm-tool" id="expressionWrap">
+                                    <i class="rongcloud-sprite rongcloud-iconfont-smile"  ng-click="showemoji=!showemoji"></i>
+
+                                    <div class="rongcloud-expressionWrap" ng-show="showemoji"><i class="rongcloud-arrow"></i>
+                                      <emoji ng-repeat="item in emojiList" item="item" content="conversation"></emoji>
+                                    </div>
+                                </div>
+                                <div class="rongcloud-MessageForm-tool">
+                                  <i class="rongcloud-sprite rongcloud-iconfont-upload" id="upload-file" style="position: relative; z-index: 1;">
+                                  </i>
+                                </div>
+                            </div>
+                            <div class="rongcloud-mode2" ng-show="_inputPanelState==2"><a ng-click="switchPerson()" id="chatSwitch" class="rongcloud-chatSwitch">转人工服务</a></div>
+                        </div>
+                        <pre id="inputMsg" class="rongcloud-text rongcloud-grey" contenteditable contenteditable-dire
+                        ng-focus="showemoji=fase"
+                        style='background-color: rgba(0,0,0,0);color:black;'
+                        ctrl-enter-keys fun="send()" ctrlenter="false" placeholder="请输入文字..." ondrop="return false;"
+                        ng-model="conversation.messageContent"></pre>
+                    </div>
+                    <div class="rongcloud-powBox">
+                        <button type="button" style="background-color: #0099ff;" class="rongcloud-rong-btn rongcloud-rong-send-btn" id="rong-sendBtn" ng-click="send()">发送</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

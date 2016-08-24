@@ -1,0 +1,20 @@
+<div id="rong-widget-box" class="rongcloud-container">
+    <div  ng-show="main.display">
+      <rong-conversation></rong-conversation>
+      <rong-conversation-list></rong-conversation-list>
+    </div>
+    <div id="rong-widget-minbtn" class="rongcloud-kefuBtnBox rongcloud-blueBg" ng-show="!main.display&&config.displayMinButton" ng-click="showbtn()">
+      <a class="rongcloud-kefuBtn" href="javascript: void(0);"  >
+          <div class="rongcloud-sprite rongcloud-people"></div>
+          <span class="rongcloud-recent" ng-show="!data.totalUnreadCount||data.totalUnreadCount==0">{{config.reminder||"最近联系人"}}</span>
+          <span class="rongcloud-recent" ng-show="data.totalUnreadCount>0"><span ng-show="twinkle" >(有未读消息)</span></span>
+      </a>
+    </div>
+    <div id="rong-widget-minbtn-kefu" class="rongcloud-kefuBtnBox rongcloud-blueBg" ng-show="!main.display&&config.displayMinButton" ng-click="showbtn()">
+      <a class="rongcloud-kefuBtn" href="javascript: void(0);">
+          <div class="rongcloud-sprite rongcloud-people rongcloud-sprite-kefu" ></div>
+          <span class="rongcloud-recent" >{{config.reminder||"联系客服"}}</span>
+      </a>
+    </div>
+    <audio id="rongcloud-playsound" style="width: 0px;height: 0px;display: none;" src="" controls="controls"></audio>
+</div>
